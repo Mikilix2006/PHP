@@ -1,0 +1,41 @@
+=== FORMATOS DE CADENAS ===
+|                         |
+|       implode()         |
+|       explode()         |
+|       trim()            |
+|       ltrim()           |
+|       rtrim()           |
+|       addslashes()      |
+|       urlencode()       |
+|       strtolower()      |
+|       strtoupper()      |
+|_________________________|
+
+=== SORTS ===
+|            |
+|  sort()    |
+|  rsort()   |
+|  natsort() |
+|  asort()   |
+|  arsort()  |
+|  shuffle() |
+|____________|
+
+======= ARRAYS =======
+|                     |
+|  array()            |
+|  array_keys()       |
+|  array_values()     |
+|  array_key_exists() |
+|  print_r()          |
+|_____________________|
+
+=== OTROS ===
+
+count() & sizeof()
+var_dump()
+bool()
+func_num_args()
+func_num_arg()
+define()
+sprintf()
