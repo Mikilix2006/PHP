@@ -1,41 +1,47 @@
-=== FORMATOS DE CADENAS ===
-|                         |
-|       implode()         |
-|       explode()         |
-|       trim()            |
-|       ltrim()           |
-|       rtrim()           |
-|       addslashes()      |
-|       urlencode()       |
-|       strtolower()      |
+*=**FORMATOS DE CADENAS**=*     *==**SORTS**==*
+|                         |     |             |
+|       implode()         |     |  sort()     |
+|       explode()         |     |  rsort()    |
+|       trim()            |     |  natsort()  |
+|       ltrim()           |     |  asort()    |
+|       rtrim()           |     |  arsort()   |
+|       addslashes()      |     |  shuffle()  |
+|       urlencode()       |     |             |
+|       strtolower()      |     *-------------*
 |       strtoupper()      |
-|_________________________|
+|                         |
+*-------------------------* 
 
-=== SORTS ===
-|            |
-|  sort()    |
-|  rsort()   |
-|  natsort() |
-|  asort()   |
-|  arsort()  |
-|  shuffle() |
-|____________|
+*=====**ARRAYS**=====*          *==**TIEMPO**==*
+|                    |          |              |
+| array()            |          |  time()      |
+| array_keys()       |          |  microtime() |
+| array_values()     |          |  date()      |
+| array_key_exists() |          |  mktime()    |
+| print_r()          |          |  checkdate() |
+|                    |          |  sortotime() |
+*--------------------*          |  getdate()   |
+                                |              |
+                                *--------------*
 
-======= ARRAYS =======
+*======**OTROS**======*
 |                     |
-|  array()            |
-|  array_keys()       |
-|  array_values()     |
-|  array_key_exists() |
-|  print_r()          |
-|_____________________|
+| 1count() & sizeof() |
+| var_dump()          |
+| bool()              |
+| func_num_args()     |
+| func_num_arg()      |
+| define()            |
+| sprintf()           |
+|                     |
+*---------------------*
 
-=== OTROS ===
-
-count() & sizeof()
-var_dump()
-bool()
-func_num_args()
-func_num_arg()
-define()
-sprintf()
+NUEVAS:
+range()
+array_reverse()
+array_count_values()
+in_array()
+strtotime() **METER EN TIEMPO Y EN FORMATOS DE CADENA**
+unset()
+empty()
+isset()
