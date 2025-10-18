@@ -16,7 +16,7 @@ print_r($meses_anio);
 echo '<br><br><br>';
 
 /* 
- * var_dump() 
+ * var_dump(mixed) 
  */
  
 $dumpear="Me van a dumpear";
