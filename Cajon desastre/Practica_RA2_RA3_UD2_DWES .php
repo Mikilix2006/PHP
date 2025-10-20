@@ -149,19 +149,6 @@
             if ($piloto==="1"||$piloto==="2")
                 $piloto_filled = true;
 
-            /*
-            // Formateo de contenidos
-            if ($categoria_filled) {
-                strtolower($categoria);
-                trim($categoria);
-            }
-
-            if ($escuderia_filled) {
-                strtolower($escuderia);
-                trim($escuderia);
-            }
-            */
-
             // Procesamiento de búsqueda
             if ($categoria_filled) {
                 if ($escuderia_filled) {
