@@ -14,7 +14,12 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
             max-width: fit-content;
             margin: auto;
         }
-
+        .php-output {
+            display:flex;
+            flex-direction: column;
+            width: fit-content;
+            margin: auto;
+        }
         form {
             display: flex;
             flex-direction: column;
@@ -37,7 +42,7 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
     <h1>BUSCADOR DE PILOTOS</h1>
     <div class="formularios">
         <div>
-            <h3>Por una combinación de sus claves</h3>
+            <h3>Por sus claves</h3>
             <form method="POST" action="http://localhost/Practica_RA2_RA3_UD2_DWES%20.php">
                 <input type ="text" name="categoria" placeholder="Categoría">      
                 <input type ="text" name="escuderia" placeholder="Escudería">
@@ -53,11 +58,11 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
             </form>
         </div>
     </div>
-    <h4>
+    <div class="php-output">
         <?php
 
             // Declaración de matriz tridimensional
-            // Motociclismo => Categoría, Escudería, Piloto (Primario, secundario)
+            // Motociclismo => Categoría, Escudería, Piloto ([0]=Primario, [1]=secundario)
             $motociclismo["MotoGP"]["Ducati Lenovo"][0]="Francesco Bagnaia, Italia";
             $motociclismo["MotoGP"]["Ducati Lenovo"][1]="Marc Marquez, España";
             $motociclismo["MotoGP"]["Yamaha"][0]="Fabio Quartararo, Francia";
@@ -146,7 +151,27 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
                         foreach ($motociclismo[$cat] as $esc => $pilotos) { // Me meto en el segundo índice
                             foreach ($motociclismo[$cat][$esc] as $pil => $valor) { // Me meto en el tercer índice
                                 // Al ser por piloto tambien, si existe el piloto, entrara a sus siguientes valores
-                                if (str_contains(strtolower($pil), $piloto_introducido)) {
+                                if ($pil==$piloto_introducido) {
+                                    // Guardo los valores en sus respectivos indices del nuevo array
+                                    $array[$cat][$esc][$pil]=$valor;
+                                }
+                            }
+                        }
+                    }
+                }
+                return $array;
+            }
+
+            function crearArrayPorEscuderiaYPiloto($escuderia_introducida,$piloto_introducido) {
+                $array = []; // Defino array
+                global $motociclismo;
+                foreach ($motociclismo as $cat => $escuderias) { // Me meto en el primer índice
+                    foreach ($motociclismo[$cat] as $esc => $pilotos) { // Me meto en el segundo índice
+                        // Al ser por escuderia, si existe la escuderia, entrara a sus siguientes valores
+                        if (str_contains(strtolower($esc), $escuderia_introducida)) {
+                            foreach ($motociclismo[$cat][$esc] as $pil => $valor) { // Me meto en el tercer índice
+                                // Al ser por piloto tambien, si existe el piloto, entrara a sus siguientes valores
+                                if ($pil==$piloto_introducido) {
                                     // Guardo los valores en sus respectivos indices del nuevo array
                                     $array[$cat][$esc][$pil]=$valor;
                                 }
@@ -209,32 +234,38 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
             function crearArrayPorPiloto($piloto_introducido) {
                 $array = []; // Defino array
                 global $motociclismo;
-                foreach ($motociclismo as $cat => $escuderias) // Me meto en el primer índice
-                    foreach ($motociclismo[$cat] as $esc => $pilotos) // Me meto en el segundo índice
-                            foreach ($motociclismo[$cat][$esc] as $pil => $valor) // Me meto en el tercer índice
-                                // Al ser por piloto, si existe el piloto, entrara a sus siguientes valores
-                                if (str_contains(strtolower($pil), $piloto_introducido))
-                                    // Guardo los valores en sus respectivos indices del nuevo array
-                                    $array[$cat][$esc][$pil]=$valor;
+                foreach ($motociclismo as $cat => $escuderias) { // Me meto en el primer índice
+                    foreach ($motociclismo[$cat] as $esc => $pilotos) { // Me meto en el segundo índice
+                        foreach ($motociclismo[$cat][$esc] as $pil => $valor) { // Me meto en el tercer índice
+                            // Al ser por piloto, si existe el piloto, entrara a sus siguientes valores
+                            if ($pil==$piloto_introducido) {
+                                // Guardo los valores en sus respectivos indices del nuevo array
+                                $array[$cat][$esc][$pil]=$valor;
+                            }
+                        }
+                    }
+                }
                 return $array;
             }
 
             /** 
-             * Crea un array con todos los pilotos
-             * y escuderias a partir de una
-             * categoria pasada por parámetro
+             * 
              */
             function crearArrayPorContenido($contenido_introducido) {
-                $string; // Defino array
+                $array = []; // Defino array
                 global $motociclismo;
-                foreach ($motociclismo as $cat => $escuderias) // Me meto en el primer índice
-                    foreach ($motociclismo[$cat] as $esc => $pilotos) // Me meto en el segundo índice
-                            foreach ($motociclismo[$cat][$esc] as $pil => $valor) // Me meto en el tercer índice
-                                // Al ser por piloto, si existe el piloto, entrara a sus siguientes valores
-                                if (str_contains(strtolower($pil), $piloto_introducido))
-                                    // Guardo los valores en sus respectivos indices del nuevo array
-                                    $array[$cat][$esc][$pil]=$valor;
-                return $string;
+                foreach ($motociclismo as $cat => $escuderias) { // Me meto en el primer índice
+                    foreach ($motociclismo[$cat] as $esc => $pilotos) { // Me meto en el segundo índice
+                        foreach ($motociclismo[$cat][$esc] as $pil => $valor) { // Me meto en el tercer índice
+                            // Al ser por contenido, si existe el contenido, guardara la informacion en el array
+                            if (str_contains(strtolower($valor),$contenido_introducido)) {
+                                // Guardo los valores en sus respectivos indices del nuevo array
+                                $array[$cat][$esc][$pil]=$valor;
+                            }
+                        }
+                    }
+                }
+                return $array;
             }
 
 
@@ -244,7 +275,7 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
             $categoria = $_POST['categoria'];
             $escuderia = $_POST['escuderia'];
             $piloto = $_POST['piloto'];
-            $valor = $_POST['contenido'];
+            $contenido = $_POST['contenido'];
             $categoria_filled = false;
             $escuderia_filled = false;
             $piloto_filled = false;
@@ -263,6 +294,9 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
             if ($piloto==="1"||$piloto==="2")
                 $piloto_filled = true;
 
+            if (trim($contenido)!=="")
+                $contenido_filled = true;
+
 
 
 
@@ -275,14 +309,18 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
                 trim($escuderia);
                 strtolower($escuderia);
             }
+            if ($contenido_filled) {
+                trim($contenido);
+                strtolower($contenido);
+            }
             // Ajuste de variable piloto para que 
             // coincida con el indice del la matriz
             if ($piloto_filled) {
-                $piloto_filled -= 1;
+                $piloto -= 1;
             }
 
-
-
+            
+            
 
             // Procesamiento de búsqueda
             // 3 campos rellenos
@@ -290,15 +328,14 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
 
             // 2 campos rellenos
             // Busqueda por categoria y escuderia
-            if ($categoria_filled && $escuderia_filled && !$piloto_filled) {
+            if ($categoria_filled && $escuderia_filled && !$piloto_filled)
                 $array=crearArrayPorCategoriaYEscuderia($categoria,$escuderia);
-            }
             // Busqueda por categoria y piloto
-            if ($categoria_filled && !$escuderia_filled && $piloto_filled) {
+            if ($categoria_filled && !$escuderia_filled && $piloto_filled)
                 $array=crearArrayPorCategoriaYPiloto($categoria,$piloto);
-            }
             // Busqueda por escuderia y piloto
-            if (!$categoria_filled && $escuderia_filled && $piloto_filled) {}
+            if (!$categoria_filled && $escuderia_filled && $piloto_filled)
+                $array=crearArrayPorEscuderiaYPiloto($escuderia,$piloto);
 
             // 1 campo relleno
             // Busqueda por categoria
@@ -312,14 +349,22 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
                 $array=crearArrayPorPiloto($piloto);
 
             // 0 campos rellenos
-            if (!$categoria_filled && !$escuderia_filled && !$piloto_filled)
+            if (!$categoria_filled && !$escuderia_filled && !$piloto_filled && !$contenido_filled)
                 mostrarCamposVacios();
 
             // Busqueda por contenido
-            if ($contenido_filled) {}
+            if ($contenido_filled)
+                $array=crearArrayPorContenido($contenido);
 
             // Impresion del array
-            imprimirArray($array);
+            if (count($array)<1) {
+                // Sin coincidencias, array vacio
+                outputSinResultados();
+            } else {
+                // Array lleno
+                echo '<h3>Resultados de búsqueda:</h3>';
+                imprimirArray($array);
+            }
             
             
             
@@ -331,6 +376,6 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
             */
 
         ?>
-    </h4>
+    </div>
 </body>
 </html>
