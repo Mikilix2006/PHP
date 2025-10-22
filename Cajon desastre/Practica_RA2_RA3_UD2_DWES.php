@@ -4,7 +4,7 @@
 Aplicación desarrollada con PHP, HTML5 y CSS3
 PHP: Inclusion de archivos externos, uso de métodos, uso de variables en ámbitos global y local.
 HTML5: Uso de formularios con metodos POST.
-CS3: Uso de estilos y clases.
+CS3: Uso de estilos y clases, uso de archivos externos.
 
 -->
 <html lang="en">
@@ -12,41 +12,14 @@ CS3: Uso de estilos y clases.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        h1, h3 {
-            max-width: fit-content;
-            margin: auto;
-        }
-        .php-output {
-            display:flex;
-            flex-direction: column;
-            width: fit-content;
-            margin: auto;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            width: 300px;
-            margin: auto;
-        }
-        input {
-            margin-bottom: 10px;
-        }
-        .formularios {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-evenly;
-            margin-top: 50px
-        }
-    </style>
-    
+    <link rel="stylesheet" href="estilosFormularioMotociclismo.css">
 </head>
 <body>
     <h1>BUSCADOR DE PILOTOS</h1>
     <div class="formularios">
         <div>
             <h3>Por sus claves</h3>
-            <form method="POST" action="http://localhost/Practica_RA2_RA3_UD2_DWES%20.php">
+            <form method="POST" action="http://localhost/Practica_RA2_RA3_UD2_DWES.php">
                 <input type ="text" name="categoria" placeholder="Categoría">      
                 <input type ="text" name="escuderia" placeholder="Escudería">
                 <input type ="number" name="piloto" placeholder="Piloto (1: titular ó 2: secundario)" title="0: Ambos pilotos, 1: Principal, 2: Secundario">
@@ -55,7 +28,7 @@ CS3: Uso de estilos y clases.
         </div>
         <div>
             <h3>Por su contenido</h3>
-            <form method="POST" action="http://localhost/Practica_RA2_RA3_UD2_DWES%20.php">
+            <form method="POST" action="http://localhost/Practica_RA2_RA3_UD2_DWES.php">
                 <input type ="text" name="contenido" placeholder="Contenido">      
                 <input type="submit" value="Buscar">
             </form>
