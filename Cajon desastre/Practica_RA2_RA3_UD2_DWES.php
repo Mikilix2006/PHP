@@ -20,17 +20,17 @@ CS3: Uso de estilos y clases, uso de archivos externos.
         <div>
             <h3>Por sus claves</h3>
             <form method="POST" action="http://localhost/Practica_RA2_RA3_UD2_DWES.php">
-                <input type ="text" name="categoria" placeholder="Categoría">      
-                <input type ="text" name="escuderia" placeholder="Escudería">
-                <input type ="number" name="piloto" placeholder="Piloto (1: titular ó 2: secundario)" title="0: Ambos pilotos, 1: Principal, 2: Secundario">
-                <input type="submit" value="Buscar">
+                <input type ="text" name="categoria" placeholder="Categoría"/>      
+                <input type ="text" name="escuderia" placeholder="Escudería"/>
+                <input type ="number" name="piloto" placeholder="Piloto (1: titular ó 2: secundario)" title="0: Ambos pilotos, 1: Principal, 2: Secundario"/>
+                <input type="submit" value="Buscar"/>
             </form>
         </div>
         <div>
             <h3>Por su contenido</h3>
             <form method="POST" action="http://localhost/Practica_RA2_RA3_UD2_DWES.php">
-                <input type ="text" name="contenido" placeholder="Contenido">      
-                <input type="submit" value="Buscar">
+                <input type ="text" name="contenido" placeholder="Contenido"/>      
+                <input type="submit" value="Buscar"/>
             </form>
         </div>
     </div>
