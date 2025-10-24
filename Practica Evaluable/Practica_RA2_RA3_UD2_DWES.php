@@ -5,6 +5,7 @@ Aplicación desarrollada con PHP, HTML5 y CSS3
 PHP: Inclusion de archivos externos, uso de métodos, uso de variables en ámbitos global y local.
 HTML5: Uso de formularios con metodos POST.
 CS3: Uso de estilos y clases, uso de archivos externos.
+XAMPP: Uso de programa XAMPP para ejecutar los PHP realizados en el buscador.
 
 -->
 <html lang="en">
