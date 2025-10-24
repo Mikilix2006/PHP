@@ -96,24 +96,20 @@ XAMPP: Uso de programa XAMPP para ejecutar los PHP realizados en el buscador.
             // Formateo de cadenas para mejor busqueda
             // Se retiran espacios en blanco por delante y por detras
             // Se pone la cadena en minúsculas
-            if ($categoria_filled) {
-                trim($categoria);
-                strtolower($categoria);
-            }
-            if ($escuderia_filled) {
-                trim($escuderia);
-                strtolower($escuderia);
-            }
-            if ($contenido_filled) {
-                trim($contenido);
-                strtolower($contenido);
-            }
+            // Formateo de categoría
+            if ($categoria_filled)
+                $categoria=strtolower(trim($categoria));
+            // Formateo de escuderia
+            if ($escuderia_filled)
+                $escuderia=strtolower(trim($escuderia));
+            // Formateo de contenido
+            if ($contenido_filled)
+                $contenido=strtolower(trim($contenido));
             // Ajuste de variable piloto para que 
             // coincida con el indice del la matriz
-            if ($piloto_filled) {
+            if ($piloto_filled)
                 $piloto -= 1;
-            }
-
+            
 
             // Procesamiento de búsqueda
             // 3 campos rellenos
