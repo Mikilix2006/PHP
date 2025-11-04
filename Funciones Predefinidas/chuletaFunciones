@@ -45,3 +45,11 @@ strtotime() **METER EN TIEMPO Y EN FORMATOS DE CADENA**
 unset()
 empty()
 isset()
+session_start()
+$_SESSION()
+
+
+-- revisar archivos y meter nuevas funciones --
+-- tanto cajon desastre como el resto --
+-- crear carpeta para explicar variables globales --
+-- las variables globales son $_VARIABLE --
