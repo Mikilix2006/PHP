@@ -9,3 +9,4 @@
 	}else{
 		echo "No es un uno, ni un dos, ni un tres";
 	}
+?>

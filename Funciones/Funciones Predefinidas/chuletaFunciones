@@ -49,7 +49,7 @@ session_start()
 $_SESSION()
 
 
--- revisar archivos y meter nuevas funciones tanto cajon desastre como el resto --
--- crear carpeta para explicar variables globales --
+-- revisar archivos y meter nuevas funciones en carpeta Funciones Predefinidas --
+-- llenar carpeta 'Funciones/Creadas por el usuario' --
 -- las variables globales son $_VARIABLE --
--- hacer en cada carpeta un archivo explicando las funciones predefinidas que hay en esa carpeta --
+-- hacer en carpeta Funciones Predefinidas archivos .php explicando todas las funciones predefinidas que se han visto --

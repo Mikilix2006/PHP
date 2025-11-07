@@ -33,5 +33,5 @@ echo "revise usuario y apellidos";
 
 </form>
 
-</body
+</body>
 </html>
