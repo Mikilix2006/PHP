@@ -98,64 +98,80 @@
 
 if ($_SERVER['REQUEST_METHOD']=="POST") {
 
-    try {
-        $form_valido = false;
+    $form_valido = false;
 
-        $datos_necesarios_categoria = false;
-        $datos_necesarios_escuderia = false;
-        $datos_necesarios_piloto = false;
+    $datos_necesarios_categoria = false;
+    $datos_necesarios_escuderia = false;
+    $datos_necesarios_piloto = false;
 
-        if (isset($_POST['categoria']))               /* ================================> */       $datos_necesarios_categoria = true;
-        if (isset($_POST['categoria']) && isset($_POST['escuderia']))      /* ===========> */       $datos_necesarios_escuderia = true;
-        if (isset($_POST['categoria']) && isset($_POST['escuderia']) && isset($_POST['escuderia'])) $datos_necesarios_piloto = true;
+    if (isset($_POST['categoria']))               /* ================================> */       $datos_necesarios_categoria = true;
+    if (isset($_POST['categoria']) && isset($_POST['escuderia']))      /* ===========> */       $datos_necesarios_escuderia = true;
+    if (isset($_POST['categoria']) && isset($_POST['escuderia']) && isset($_POST['escuderia'])) $datos_necesarios_piloto = true;
 
-        // Comprobar que la introduccion de datos ha sido correcta
-        if (isset($_POST['CRUD']) && // obligatorio
-            isset($_POST['tabla'])) // obligatorio)
-            {
+    // Comprobar que la introduccion de datos ha sido correcta
+    if (isset($_POST['CRUD']) && // obligatorio
+        isset($_POST['tabla'])) // obligatorio)
+        {
+        /**
+         * ________________________
+         * |                      |
+         * |       DEBUGGER       |
+         * |______________________|
+         * 
+         */
+        echo "Rellenados crud y tabla <br>";
+
+        $crud = $_POST['CRUD']; // recoger seleccion
+        $tabla = $_POST['tabla']; // recoger seleccion
+        // Si cualquiera de las opciones disponibles es verdadera
+        // quiere decir que el formulario es valido
+        if ($datos_necesarios_categoria ||
+            $datos_necesarios_escuderia ||
+            $datos_necesarios_piloto) {
+                $form_valido = true;
+            } else {
+                echo "Rellena todos los datos necesarios del formulario.";
+            }
+        }
+
+    if ($form_valido) {
+        try {
+            $cadena_conexion = 'mysql:dbname=BBDD1;host=localhost';
+            $usuario = 'PracticaUD3';
+            $password = '123456';
+            
+            // Conexion a BBDD
+            $bd = new PDO($cadena_conexion, $usuario, $password);
+            echo "<br><br>Conexión a BD correcta<br><br>";
             /**
-             * ________________________
-             * |                      |
-             * |       DEBUGGER       |
-             * |______________________|
+             * ____________________ #### #### #   # #### 
+             * |                  | #    #  # #   # #   #
+             * |    SELECCION     | #    #### #   # #   #
+             * |    CRUD CREAR    | #    # #  #   # #   #
+             * |__________________| #### #  # ##### #### 
+             *  
+             * Cadena de if y elseif que van a
+             * filtrar que tabla ha seleccionado
+             * el usuario en el formulario
              * 
              */
-            echo "Rellenados crud y tabla <br>";
-
-            $crud = $_POST['CRUD']; // recoger seleccion
-            $tabla = $_POST['tabla']; // recoger seleccion
-
-            $categoria_filled = false;
-            $escuderia_filled = false;
-            $piloto_filled = false;
-
-            // en caso de querer introducir en categoria, el campo categoria requerido
-            /**
-             * HACER IF PARA VER QUE ACCION CRUD HA SELECCIONADO ENGLOBANDO IFs DE CADA TABLA
-             */
-            if ($crud=='crear') {
+            if ($crud == 'crear') {
                 /**
-                 * ________________________
-                 * |                      |
-                 * |       DEBUGGER       |
-                 * |______________________|
+                 * __________________
+                 * |                | ##### #### ####  #     ####
+                 * |    CREAR EN    |   #   #  # #  #  #     #  #
+                 * |     TABLA      |   #   #### ##### #     ####
+                 * |    CATEGORIA   |   #   #  # #   # #     #  #
+                 * |________________|   #   #  # ##### ##### #  #
                  * 
                  */
-                echo "El crud es crear <br>";
-                if ($tabla=='tabla_categoria' && $datos_necesarios_categoria) {
-                    /**
-                     * ________________________
-                     * |                      |
-                     * |       DEBUGGER       |
-                     * |______________________|
-                     * 
-                     */
-                    echo "La tabla es categoria <br>";
-                    $categoria = $_POST['categoria']; // recoger informacion del formulario
+                if ($tabla == 'tabla_categoria' && $datos_necesarios_categoria) {
+                    $categoria = $_POST['categoria']; // Recoger informacion del formulario
                     /**
                      * _______________________
                      * |                     |
                      * | VALIDAR INFORMACION |
+                     * |    DE CATEGORIA     |
                      * |_____________________|
                      * 
                      */
@@ -165,140 +181,20 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                      * __________________________
                      * |                        |
                      * | TRATAMIENTO DE ERRORES |
+                     * |    DE INSERCION DE     |
+                     * |       CATEGORIA        |
                      * |________________________|
                      * 
                      */
                     if (!$categoria_filled) {
                         echo "La categoría introducida no es válida.";
-                    }
-                    /**
-                     * ____________________________
-                     * |                          |
-                     * | INTRODUCCION DE REGISTRO |
-                     * |    A TABLA CATEGORIA     |
-                     * |__________________________|
-                     * 
-                     */
-                    else // No hay errores
-                        $form_valido = true;
+                    } else {
                         /**
-                         * ________________________
-                         * |                      |
-                         * |       DEBUGGER       |
-                         * |______________________|
-                         * 
-                         */
-                        echo "Introducido: $categoria <br>";
-                } 
-                // en caso de querer introducir en escuderia, los 2 primeros campos requeridos
-                elseif ($tabla=='escuderia' && $datos_necesarios_escuderia) {
-                    $categoria = $_POST['categoria']; // recoger informacion del formulario
-                    $escuderia = $_POST['escuderia']; // recoger informacion del formulario
-                    $form_valido = true;
-                    /**
-                     * _______________________
-                     * |                     |
-                     * | VALIDAR INFORMACION |
-                     * |_____________________|
-                     * 
-                     */
-                    /**
-                     * __________________________
-                     * |                        |
-                     * | TRATAMIENTO DE ERRORES |
-                     * |________________________|
-                     * 
-                     */
-                    /**
-                     * ____________________________
-                     * |                          |
-                     * | INTRODUCCION DE REGISTRO |
-                     * |    A TABLA CATEGORIA     |
-                     * |__________________________|
-                     * 
-                     */
-                }
-                // en caso de querer introducir en piloto, los 3 campos requeridos
-                elseif ($tabla=='piloto' && $datos_necesarios_piloto) {
-                    $categoria = $_POST['categoria']; // recoger informacion del formulario
-                    $escuderia = $_POST['escuderia']; // recoger informacion del formulario
-                    $piloto = $_POST['piloto']; // recoger informacion del formulario
-                    $form_valido = true;
-                    /**
-                     * _______________________
-                     * |                     |
-                     * | VALIDAR INFORMACION |
-                     * |_____________________|
-                     * 
-                     */
-                    /**
-                     * __________________________
-                     * |                        |
-                     * | TRATAMIENTO DE ERRORES |
-                     * |________________________|
-                     * 
-                     */
-                    /**
-                     * ____________________________
-                     * |                          |
-                     * | INTRODUCCION DE REGISTRO |
-                     * |    A TABLA CATEGORIA     |
-                     * |__________________________|
-                     * 
-                     */
-                }
-            }
-        } else {
-            echo "<br><br>ERROR: Seleccion operaciones e introduce datos<br><br>";
-        }
-
-        
-
-        if ($form_valido) {
-            try {
-                $cadena_conexion = 'mysql:dbname=BBDD1;host=localhost';
-                $usuario = 'PracticaUD3';
-                $password = '123456';
-                
-                // Conexion a BBDD
-                $bd = new PDO($cadena_conexion, $usuario, $password);
-                echo "<br><br>Conexión a BD correcta<br><br>";
-                /**
-                 * ________________________
-                 * |                      |
-                 * |  SELECCION DEL CRUD  |
-                 * |______________________|
-                 * 
-                 *  Cadena de if y elseif que van a filtrar que
-                 *  accion del CRUD ha seleccionado
-                 *  el usuario en el formulario
-                 * 
-                 */
-                if ($crud == 'crear') {
-                    /**
-                     * __________________
-                     * |                |
-                     * |     TABLAS     |
-                     * |________________|
-                     * 
-                     * Cadena de if y elseif que van a
-                     * filtrar que tabla ha seleccionado
-                     * el usuario en el formulario
-                     * 
-                     */
-                    if ($tabla == 'tabla_categoria') {
-                        /**
-                         * __________________________
-                         * |                        |
-                         * | FUNCIONA CORRECTAMENTE |
-                         * |________________________|
-                         * 
-                         */
-                        /**
-                         * ________________________
-                         * |                      |
-                         * |  INSERTAR CATEGORIA  |
-                         * |______________________|
+                         * ____________________________
+                         * |                          |
+                         * | INTRODUCCION DE REGISTRO |
+                         * |    A TABLA CATEGORIA     |
+                         * |__________________________|
                          * 
                          * == ACCION ==
                          * El usuario ha seleccionado las
@@ -315,20 +211,60 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                          * usuario con el problema.
                          * 
                          */
+                    
                         try {
                             $preparada = $bd->prepare("INSERT INTO categoria(nombre_categoria) VALUES(?);");
                             $preparada->execute(array($categoria));
-                            echo "Caterogía insertada con éxito<br>";
+                            echo "Caterogía < $categoria > insertada con éxito<br>";
                         }  catch (PDOException $e) {
                             echo 'Error insertando la categoría => ' . $e->getMessage();
                         }
-
-                    } elseif ($tabla == 'tabla_escuderia') {
+                    }
+                /**
+                 * __________________
+                 * |                | ##### #### ####  #     ####
+                 * |    CREAR EN    |   #   #  # #  #  #     #  #
+                 * |     TABLA      |   #   #### ##### #     ####
+                 * |    ESCUDERIA   |   #   #  # #   # #     #  #
+                 * |________________|   #   #  # ##### ##### #  #
+                 * 
+                 */
+                } elseif ($tabla == 'tabla_escuderia' && $datos_necesarios_escuderia) {
+                    $categoria = $_POST['categoria']; // recoger informacion del formulario
+                    $escuderia = $_POST['escuderia']; // recoger informacion del formulario
+                    /**
+                     * _______________________
+                     * |                     |
+                     * | VALIDAR INFORMACION |
+                     * |   DE CATEGORIA Y    |
+                     * |      ESCUDERIA      |
+                     * |_____________________|
+                     * 
+                     */
+                    if (trim($categoria)!=="")
+                        $categoria_filled = true;
+                    if (trim($escuderia)!=="")
+                        $escuderia_filled = true;
+                    /**
+                     * __________________________
+                     * |                        |
+                     * | TRATAMIENTO DE ERRORES |
+                     * |     DE INSERCION DE    |
+                     * |        ESCUDERIA       |
+                     * |________________________|
+                     * 
+                     */
+                    if (!$categoria_filled) {
+                        echo "La categoría introducida no es válida.";
+                    } elseif (!$escuderia_filled) {
+                        echo "La escudería introducida no es válida.";
+                    } else {
                         /**
-                         * ________________________
-                         * |                      |
-                         * |  INSERTAR ESCUDERIA  |
-                         * |______________________|
+                         * ____________________________
+                         * |                          |
+                         * | INTRODUCCION DE REGISTRO |
+                         * |    A TABLA ESCUDERIA     |
+                         * |__________________________|
                          * 
                          * == ACCION ==
                          * El usuario ha seleccionado las
@@ -352,7 +288,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                          * los datos, informara al
                          * usuario con el problema.
                          * 
-                         */
+                        */
                         try {
                             // RECOGER CATEGORIAS EXISTENTES
                             $sql = 'SELECT * FROM categoria;';
@@ -371,57 +307,106 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         }  catch (PDOException $e) {
                             echo 'Error insertando la categoría => ' . $e->getMessage();
                         }
-                    } elseif ($tabla == 'tabla_piloto') {
-                        echo "Crear piloto";
-                        // IMPLANTAR CAMPOS PARA RECOGER INFO
                     }
-                } elseif ($crud == 'recuperar') {
-                    if ($tabla == 'tabla_categoria') {
-                        echo "Recuperar categoria";
-                        // IMPLANTAR CAMPOS PARA RECOGER INFO
-                    } elseif ($tabla == 'tabla_escuderia') {
-                        echo "Recuperar escuderia";
-                        // IMPLANTAR CAMPOS PARA RECOGER INFO
-                    } elseif ($tabla == 'tabla_piloto') {
-                        echo "Recuperar piloto";
-                        // IMPLANTAR CAMPOS PARA RECOGER INFO
-                    }
-                } elseif ($crud == 'actualizar') {
-                    if ($tabla == 'ctabla_ategoria') {
-                        echo "Actualizar categoria";
-                        // IMPLANTAR CAMPOS PARA RECOGER INFO
-                    } elseif ($tabla == 'tabla_escuderia') {
-                        echo "Actualizar escuderia";
-                        // IMPLANTAR CAMPOS PARA RECOGER INFO
-                    } elseif ($tabla == 'tabla_piloto') {
-                        echo "Actualizar piloto";
-                        // IMPLANTAR CAMPOS PARA RECOGER INFO
-                    }
-                } elseif ($crud == 'eliminar') {
-                    if ($tabla == 'tabla_categoria') {
-                        echo "Eliminar categoria";
-                        // IMPLANTAR CAMPOS PARA RECOGER INFO
-                    } elseif ($tabla == 'tabla_escuderia') {
-                        echo "Eliminar escuderia";
-                        // IMPLANTAR CAMPOS PARA RECOGER INFO
-                    } elseif ($tabla == 'tabla_piloto') {
-                        echo "Eliminar piloto";
-                        // IMPLANTAR CAMPOS PARA RECOGER INFO
-                    }
-                } else {
-                    echo "Operación: " . htmlspecialchars($crud) . " | Tabla: " . htmlspecialchars($tabla);
+                /**
+                 * __________________
+                 * |                | ##### #### ####  #     ####
+                 * |    CREAR EN    |   #   #  # #  #  #     #  #
+                 * |     TABLA      |   #   #### ##### #     ####
+                 * |     PILOTO     |   #   #  # #   # #     #  #
+                 * |________________|   #   #  # ##### ##### #  #
+                 * 
+                 */
+                } elseif ($tabla == 'tabla_piloto') {
+                    echo "Crear piloto";
+                    $categoria = $_POST['categoria']; // recoger informacion del formulario
+                    $escuderia = $_POST['escuderia']; // recoger informacion del formulario
+                    $piloto = $_POST['piloto']; // recoger informacion del formulario
+                    /**
+                     * _______________________
+                     * |                     |
+                     * | VALIDAR INFORMACION |
+                     * |    DE CATEGORIA,    |
+                     * |     ESCUDERIA Y     |
+                     * |       PILOTO        |
+                     * |_____________________|
+                     * 
+                     */
+                    /**
+                     * __________________________
+                     * |                        |
+                     * | TRATAMIENTO DE ERRORES |
+                     * |    DE INSERCION DE     |
+                     * |         PILOTO         |   
+                     * |________________________|
+                     * 
+                     */
+                    /**
+                     * ____________________________
+                     * |                          |
+                     * | INTRODUCCION DE REGISTRO |
+                     * |     A TABLA PILOTO       |
+                     * |__________________________|
+                     * 
+                     * == ACCION ==
+                     * El usuario ha seleccionado las
+                     * opciones "Crear registro" y
+                     * "Piloto".
+                     * 
+                     * == INTRODUCCION DE DATOS ==
+                     * Introducir el piloto y a
+                     * que escuderia y categoria pertenece
+                     * especificadas por el usuario
+                     * 
+                     * == INFORME DE ERRORES ==
+                     * Si da algun error al introducir
+                     * los datos, informara al
+                     * usuario con el problema.
+                     * 
+                     */
                 }
-
-            } catch (PDOException $e) {
-		        echo 'Error qal conectar con la BD: ' . $e->getMessage();
+            } elseif ($crud == 'recuperar') {
+                if ($tabla == 'tabla_categoria') {
+                    echo "Recuperar categoria";
+                    // IMPLANTAR CAMPOS PARA RECOGER INFO
+                } elseif ($tabla == 'tabla_escuderia') {
+                    echo "Recuperar escuderia";
+                    // IMPLANTAR CAMPOS PARA RECOGER INFO
+                } elseif ($tabla == 'tabla_piloto') {
+                    echo "Recuperar piloto";
+                    // IMPLANTAR CAMPOS PARA RECOGER INFO
+                }
+            } elseif ($crud == 'actualizar') {
+                if ($tabla == 'tabla_categoria') {
+                    echo "Actualizar categoria";
+                    // IMPLANTAR CAMPOS PARA RECOGER INFO
+                } elseif ($tabla == 'tabla_escuderia') {
+                    echo "Actualizar escuderia";
+                    // IMPLANTAR CAMPOS PARA RECOGER INFO
+                } elseif ($tabla == 'tabla_piloto') {
+                    echo "Actualizar piloto";
+                    // IMPLANTAR CAMPOS PARA RECOGER INFO
+                }
+            } elseif ($crud == 'eliminar') {
+                if ($tabla == 'tabla_categoria') {
+                    echo "Eliminar categoria";
+                    // IMPLANTAR CAMPOS PARA RECOGER INFO
+                } elseif ($tabla == 'tabla_escuderia') {
+                    echo "Eliminar escuderia";
+                    // IMPLANTAR CAMPOS PARA RECOGER INFO
+                } elseif ($tabla == 'tabla_piloto') {
+                    echo "Eliminar piloto";
+                    // IMPLANTAR CAMPOS PARA RECOGER INFO
+                }
+            } else {
+                echo "Operación: " . htmlspecialchars($crud) . " | Tabla: " . htmlspecialchars($tabla);
             }
-            
+
+        } catch (PDOException $e) {
+            echo 'Error qal conectar con la BD: ' . $e->getMessage();
         }
-
-
-    } catch (PDOException $e) {
-		echo 'Error: ' . $e->getMessage();
-	}
+        
+    }
 }
 
 ?>
