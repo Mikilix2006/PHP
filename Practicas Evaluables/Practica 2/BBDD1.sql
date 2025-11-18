@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-11-2025 a las 12:34:03
+-- Tiempo de generación: 18-11-2025 a las 13:32:45
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -67,6 +67,8 @@ INSERT INTO `escuderia` (`id_escuderia`, `nombre_escuderia`, `fk_id_categoria`) 
 (4, 'MT Helmets', 2),
 (9, 'MT Helmets', 3),
 (5, 'Pramac Racing', 2),
+(10, 'Track House', 4),
+(11, 'VR46', 4),
 (2, 'Yamaha', 1);
 
 -- --------------------------------------------------------
@@ -103,7 +105,8 @@ INSERT INTO `piloto` (`id_piloto`, `nombre_piloto`, `fk_id_escuderia`) VALUES
 (15, 'Máximo Quiles, España', 8),
 (16, 'Dennis Foggia, Italia', 8),
 (17, 'Ryusei Yamanaka, Japón', 9),
-(18, 'Ángel Piqueras, España', 9);
+(18, 'Ángel Piqueras, España', 9),
+(19, 'Valentino Rossi, Italia', 11);
 
 -- --------------------------------------------------------
 
@@ -184,19 +187,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `escuderia`
 --
 ALTER TABLE `escuderia`
-  MODIFY `id_escuderia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_escuderia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `piloto`
 --
 ALTER TABLE `piloto`
-  MODIFY `id_piloto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_piloto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Restricciones para tablas volcadas

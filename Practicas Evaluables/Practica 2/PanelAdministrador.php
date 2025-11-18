@@ -10,6 +10,9 @@
             width: fit-content;
             margin:auto;
         }
+        a {
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
