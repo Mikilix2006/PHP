@@ -549,7 +549,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         }
 
                     }  catch (PDOException $e) {
-                        echo 'Error insertando la escuderia => ' . $e->getMessage();
+                        echo 'Error insertando el piloto => ' . $e->getMessage();
                     }
                 }
             }
