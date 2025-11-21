@@ -19,7 +19,7 @@ qué datos se quieren actualizar.
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Recuperar datos</title>
+    <title>Actualizar datos</title>
     <style>
         form {
             display: flex;
@@ -52,7 +52,7 @@ qué datos se quieren actualizar.
     </style>
 </head>
 <body>
-    <p>Este es el panel de RECUPERACION de datos para administradores</p>
+    <p>Este es el panel de ACTUALIZACIÓN de datos para administradores</p>
     
     <br><br><br>
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -60,22 +60,34 @@ qué datos se quieren actualizar.
             <div class="seccion">
                 TABLAS
                 <div class="elemento-seccion">
-                    <input type="checkbox" name="tabla" id="tabla_categoria" value="tabla_categoria">
+                    <input type="radio" name="tabla" id="tabla_categoria" value="tabla_categoria">
                     <label for="tabla_categoria">Categoria</label>
                 </div>
                 <div class="elemento-seccion">
-                    <input type="checkbox" name="tabla" id="tabla_escuderia" value="tabla_escuderia">
+                    <input type="radio" name="tabla" id="tabla_escuderia" value="tabla_escuderia">
                     <label for="tabla_escuderia">Escudería</label>
                 </div>
                 <div class="elemento-seccion">
-                    <input type="checkbox" name="tabla" id="tabla_piloto" value="tabla_piloto">
+                    <input type="radio" name="tabla" id="tabla_piloto" value="tabla_piloto">
                     <label for="tabla_piloto">Piloto</label>
+                </div>
+            </div>
+            <div class="seccion">
+                DATO ANTIGUO
+                <div class="elemento-seccion">
+                    <input type="text" name="antiguo" id="antiguo">
+                </div>
+            </div>
+            <div class="seccion">
+                DATO NUEVO
+                <div class="elemento-seccion">
+                    <input type="text" name="nuevo" id="nuevo">
                 </div>
             </div>
         </div>
         <input type="submit" value="Buscar">
     </form>
-    <br><br><br>
+    <br><br><br> 
 
     <a href="PanelAdministrador.php"><button>Volver al panel<br>de Administrador</button></a>
     <a href="Practica_RA4_RA6_UD3.php"><button>Cerrar sesion</button></a>
@@ -96,6 +108,9 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     if ($form_valido) {
 
+        $antiguo_filled = false;
+        $nuevo_filled = false;
+
         try { // try catch para la conexion con la base de datos
             /**
              * __________________
@@ -107,22 +122,112 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
              * 
              */
             if ($tabla == 'tabla_categoria') {
-                try {
-                    $cadena_conexion = 'mysql:dbname=BBDD1;host=localhost';
-                    $usuario = 'PracticaUD3';
-                    $password = '123456';
-                    
-                    // Conexion a BBDD
-                    $bd = new PDO($cadena_conexion, $usuario, $password);
-                    echo "<br><br>Conexión a BD correcta<br><br>";
+                $antiguo = $_POST['antiguo']; // Recoger informacion del formulario
+                $nuevo = $_POST['nuevo']; // Recoger informacion del formulario
+                /**
+                 * _______________________
+                 * |                     |
+                 * | VALIDAR INFORMACION |
+                 * |    DE CATEGORIA     |
+                 * |_____________________|
+                 * 
+                 * == VALIDACIONES MANUALES ==
+                 * Comprueba que la categoria este informada.
+                 * Si no esta informada pasa a la parte
+                 * de informe de errores.
+                 * 
+                 */
+                if (trim($antiguo)!=="")
+                    $antiguo_filled = true;
+                if (trim($nuevo)!=="")
+                    $nuevo_filled = true;
+                /**
+                 * __________________________
+                 * |                        |
+                 * | TRATAMIENTO DE ERRORES |
+                 * |    DE INSERCION DE     |
+                 * |       CATEGORIA        |
+                 * |________________________|
+                 * 
+                 */
+                if (!$antiguo_filled) {
+                    echo "<br><br>La antigua categoría introducida no es válida. ";
+                } elseif (!$nuevo_filled) {
+                    echo "<br><br>La nueva categoría introducida no es válida. ";
+                } else {
+                    /**
+                     * _____________________________
+                     * |                           |
+                     * | ACTUALIZACION DE REGISTRO |
+                     * |    EN TABLA CATEGORIA     |
+                     * |___________________________|
+                     * 
+                     * == ACCION ==
+                     * El usuario ha seleccionado la
+                     * opcion "Categoria".
+                     * 
+                     * == CONEXION A BBDD ==
+                     * Conectar con credenciales
+                     * automaticas a la bbdd.
+                     * 
+                     * == ACTUALIZACION DE DATOS ==
+                     * Actualizar la categoria
+                     * especificada por el usuario.
+                     * 
+                     * No van a estar permitidas las
+                     * categorías repetidas.
+                     * 
+                     * == INFORME DE ERRORES ==
+                     * Si da algun error al actualizar
+                     * los datos, informara al
+                     * usuario con el problema.
+                     * 
+                     */
+                    try {
+                        $cadena_conexion = 'mysql:dbname=BBDD1;host=localhost';
+                        $usuario = 'PracticaUD3';
+                        $password = '123456';
+                        
+                        // Conexion a BBDD
+                        $bd = new PDO($cadena_conexion, $usuario, $password);
+                        echo "<br><br>Conexión a BD correcta<br><br>";
 
-                    $sql = 'SELECT * 
-                            FROM categoria 
-                            ORDER BY id_categoria;';
-                    $result = $bd->query($sql);
+                        $sql = 'SELECT * 
+                                FROM categoria 
+                                ORDER BY id_categoria;';
+                        $result = $bd->query($sql);
 
-                }  catch (PDOException $e) {
-                        echo 'Error insertando la categoría => ' . $e->getMessage();
+                        $existe_categoria = false;
+                        $existe_nueva_categoria = false;
+                        foreach ($result as $row) {
+                            if ($row['nombre_categoria']==$antiguo) {
+                                $existe_categoria = true;
+                            }
+                            if ($row['nombre_categoria']==$nuevo) {
+                                $existe_nueva_categoria = true;
+                            }
+                        }
+                        // Actualizacion de datos
+                        if (!$existe_categoria) {
+                            echo "<br><br>La categoria a actualizar no existe en la base de datos.";
+                        } else {
+                            if ($existe_nueva_categoria) {
+                                echo "<br><br>La nueva categoria ya existe en la BBDD.";
+                            } else {
+                                // Actualizar categoria
+                                $preparada = $bd->prepare("UPDATE categoria 
+                                                            SET nombre_categoria = ?
+                                                            WHERE nombre_categoria = ?;");
+                                $preparada->execute(array($nuevo, $antiguo));
+                                echo "<br>Caterogía actualizada con éxito<br><br>";
+                                echo "VALORES ACTUALIZADOS:<br>";
+                                echo "Categoria antigua: $antiguo<br>";
+                                echo "Categoria nueva: $nuevo";
+                            }
+                        }
+                    }  catch (PDOException $e) {
+                            echo 'Error actualizando la categoría => ' . $e->getMessage();
+                    }
                 }
             /**
              * __________________
