@@ -57,15 +57,15 @@ qué datos se quieren introducir.
             <div class="seccion">
                 TABLA
                 <div class="elemento-seccion">
-                    <input type="radio" name="tabla" id="tabla_categoria" value="tabla_categoria">
+                    <input type="radio" name="tabla" id="tabla_categoria" value="tabla_categoria" <?php if(isset($_POST['tabla']) && $_POST['tabla'] == 'tabla_categoria') { echo 'checked'; } ?>>
                     <label for="tabla_categoria">Categoria</label>
                 </div>
                 <div class="elemento-seccion">
-                    <input type="radio" name="tabla" id="tabla_escuderia" value="tabla_escuderia">
+                    <input type="radio" name="tabla" id="tabla_escuderia" value="tabla_escuderia" <?php if(isset($_POST['tabla']) && $_POST['tabla'] == 'tabla_escuderia') { echo 'checked'; } ?>>
                     <label for="tabla_escuderia">Escudería</label>
                 </div>
                 <div class="elemento-seccion">
-                    <input type="radio" name="tabla" id="tabla_piloto" value="tabla_piloto">
+                    <input type="radio" name="tabla" id="tabla_piloto" value="tabla_piloto" <?php if(isset($_POST['tabla']) && $_POST['tabla'] == 'tabla_piloto') { echo 'checked'; } ?>>
                     <label for="tabla_piloto">Piloto</label>
                 </div>
             </div>
@@ -189,12 +189,12 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                     echo "<br><br>Conexión a BD correcta<br><br>";
                 
                     try {
-                        $sql = 'SELECT * FROM escuderia;';
+                        $sql = 'SELECT * FROM categoria;';
                         $result = $bd->query($sql);
-                        $existe_escuderia = false;
+                        $existe_categoria = false;
                         foreach ($result as $row) {
-                            if ($row['nombre_escuderia'] == $escuderia) {
-                                $existe_escuderia = true;
+                            if ($row['nombre_categoria'] == $categoria) {
+                                $existe_categoria = true;
                             }
                         }
                         if (!$existe_categoria) {

@@ -57,15 +57,15 @@ por el usuario en un formulario.
             <div class="seccion">
                 TABLAS
                 <div class="elemento-seccion">
-                    <input type="radio" name="tabla" id="tabla_categoria" value="tabla_categoria">
+                    <input type="radio" name="tabla" id="tabla_categoria" value="tabla_categoria" <?php if(isset($_POST['tabla']) && $_POST['tabla'] == 'tabla_categoria') { echo 'checked'; } ?>>
                     <label for="tabla_categoria">Categoria</label>
                 </div>
                 <div class="elemento-seccion">
-                    <input type="radio" name="tabla" id="tabla_escuderia" value="tabla_escuderia">
+                    <input type="radio" name="tabla" id="tabla_escuderia" value="tabla_escuderia" <?php if(isset($_POST['tabla']) && $_POST['tabla'] == 'tabla_escuderia') { echo 'checked'; } ?>>
                     <label for="tabla_escuderia">Escudería</label>
                 </div>
                 <div class="elemento-seccion">
-                    <input type="radio" name="tabla" id="tabla_piloto" value="tabla_piloto">
+                    <input type="radio" name="tabla" id="tabla_piloto" value="tabla_piloto" <?php if(isset($_POST['tabla']) && $_POST['tabla'] == 'tabla_piloto') { echo 'checked'; } ?>>
                     <label for="tabla_piloto">Piloto</label>
                 </div>
             </div>

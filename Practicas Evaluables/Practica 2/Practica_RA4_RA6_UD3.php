@@ -6,9 +6,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         // Guardamos usuario introducido
         $user = $_POST['user'];
 
-        $cadena_conexion = 'mysql:dbname=BBDD1;host=localhost';
-        $usuario = 'PracticaUD3';
-        $password = '123456';
+        include "CFGINI.php";
         
         // Conexion a BBDD
         $bd = new PDO($cadena_conexion, $usuario, $password);
@@ -50,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
     <!-- Inicio Formulario -->
     <form method="POST" 
           action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+        <p>LOGIN</p>
         <!-- Input user -->
         <input value="<?php if (isset($user)) echo $user; ?>" 
                id="user" 

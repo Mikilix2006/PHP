@@ -25,11 +25,3 @@
     <a href="Practica_RA4_RA6_UD3.php"><button>Cerrar sesion</button></a>
 </body>
 </html>
-
-<?php
-
-if ($_SERVER['REQUEST_METHOD']=="POST") {
-
-}
-
-?>
