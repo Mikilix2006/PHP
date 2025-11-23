@@ -12,14 +12,14 @@ de datos de la tabla categoria elegida
 por el usuario en un formulario.
 
 Además, se deberá especificar
-qué datos se quieren actualizar.
+qué datos se quieren eliminar.
 
 -->
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Actualizar datos</title>
+    <title>Eliminar datos</title>
     <style>
         form {
             display: flex;
@@ -53,28 +53,28 @@ qué datos se quieren actualizar.
 </head>
 <body>
     <p><b>
-        Actualizar tabla categoria
+        Eliminar de la tabla categoria
     </b></p>
     <br><br><br>
-    <form method="POST" action="actualizarCategoria.php">
+    <form method="POST" action="eliminarCategoria.php">
         <div class="seleccion">
             <div class="seccion">
-                DATO ANTIGUO
+                DATO A ELIMINAR
                 <div class="elemento-seccion">
-                    <input type="text" name="antiguo" id="antiguo">
+                    <input type="text" name="categoria" id="categoria">
                 </div>
             </div>
             <div class="seccion">
-                DATO NUEVO
+                CONFIRMA EL DATO
                 <div class="elemento-seccion">
-                    <input type="text" name="nuevo" id="nuevo">
+                    <input type="text" name="confirmacion" id="confirmacion">
                 </div>
             </div>
         </div>
-        <input type="submit" value="Actualizar">
+        <input type="submit" value="Eliminar">
     </form>
     <br><br><br>
-    <a href="actualizar.php"><button>ACTUALIZAR OTRA<br>TABLA</button></a>
+    <a href="actualizar.php"><button>ELIMINAR DE OTRA<br>TABLA</button></a>
 </body>
 </html>
 
@@ -82,21 +82,21 @@ qué datos se quieren actualizar.
 
 if ($_SERVER['REQUEST_METHOD']=="POST") {
 
-    $antiguo_filled = false;
-    $nuevo_filled = false;
+    $categoria_filled = false;
+    $confirmacion_filled = false;
 
     try { // try catch para la conexion con la base de datos
         /**
          * __________________
          * |                | █████ ████ ████  █     ████     ████
-         * |   ACTUALIZAR   |   █   █  █ █  █  █     █  █     █   
+         * |    ELIMINAR    |   █   █  █ █  █  █     █  █     █   
          * |     TABLA      |   █   ████ █████ █     ████     █   
          * |    CATEGORIA   |   █   █  █ █   █ █     █  █     █   
          * |________________|   █   █  █ █████ █████ █  █     ████
          * 
          */
-        $antiguo = $_POST['antiguo']; // Recoger informacion del formulario
-        $nuevo = $_POST['nuevo']; // Recoger informacion del formulario
+        $categoria = $_POST['categoria']; // Recoger informacion del formulario
+        $confirmacion = $_POST['confirmacion']; // Recoger informacion del formulario
         /**
          * _______________________
          * |                     |
@@ -110,30 +110,32 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
          * de informe de errores.
          * 
          */
-        if (trim($antiguo)!=="")
-            $antiguo_filled = true;
-        if (trim($nuevo)!=="")
-            $nuevo_filled = true;
+        if (trim($categoria)!=="")
+            $categoria_filled = true;
+        if (trim($confirmacion)!=="")
+            $confirmacion_filled = true;
         /**
          * __________________________
          * |                        |
-         * | TRATAMIENTO DE ERRORES |
-         * |  DE ACTUALIZACION DE   |
+         * | TRATAMIENTO DE ERRORES | 
+         * |   DE ELIMINACION DE    |
          * |       CATEGORIA        |
          * |________________________|
          * 
          */
-        if (!$antiguo_filled && !$nuevo_filled) {
+        if (!$categoria_filled && !$confirmacion_filled) {
             echo "<br><br>Introduzca datos válidos.";
-        } elseif (!$antiguo_filled) {
+        } elseif (!$categoria_filled) {
             echo "<br><br>La antigua categoría introducida no es válida. ";
-        } elseif (!$nuevo_filled) {
+        } elseif (!$confirmacion_filled) {
             echo "<br><br>La nueva categoría introducida no es válida. ";
+        } elseif ($categoria != $confirmacion) {
+            echo "<br><br>La categoria y la confirmacion no son iguales.";
         } else {
             /**
              * _____________________________
              * |                           |
-             * | ACTUALIZACION DE REGISTRO |
+             * |  ELIMINACION DE REGISTRO  |
              * |    EN TABLA CATEGORIA     |
              * |___________________________|
              * 
@@ -145,15 +147,12 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
              * Conectar con credenciales
              * automaticas a la bbdd.
              * 
-             * == ACTUALIZACION DE DATOS ==
-             * Actualizar la categoria
+             * == ELIMINACION DE DATOS ==
+             * Eliminar la categoria
              * especificada por el usuario.
              * 
-             * No van a estar permitidas las
-             * categorías repetidas.
-             * 
              * == INFORME DE ERRORES ==
-             * Si da algun error al actualizar
+             * Si da algun error al eliminar
              * los datos, informara al
              * usuario con el problema.
              * 
@@ -172,13 +171,9 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 
                 // Comnprobacion de existencias
                 $existe_categoria = false;
-                $existe_nueva_categoria = false;
                 foreach ($result as $row) {
-                    if ($row['nombre_categoria']==$antiguo) {
+                    if ($row['nombre_categoria']==$categoria) {
                         $existe_categoria = true;
-                    }
-                    if ($row['nombre_categoria']==$nuevo) {
-                        $existe_nueva_categoria = true;
                     }
                 }
                 // Actualizacion de datos
@@ -192,11 +187,11 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         $preparada = $bd->prepare("UPDATE categoria 
                                                     SET nombre_categoria = ?
                                                     WHERE nombre_categoria = ?;");
-                        $preparada->execute(array($nuevo, $antiguo));
+                        $preparada->execute(array($confirmacion, $categoria));
                         echo "<br>Caterogía actualizada con éxito<br><br>";
                         echo "VALORES ACTUALIZADOS:<br>";
-                        echo "Categoria antigua: $antiguo<br>";
-                        echo "Categoria nueva: $nuevo";
+                        echo "Categoria antigua: $categoria<br>";
+                        echo "Categoria nueva: $confirmacion";
                     }
                 }
             }  catch (PDOException $e) {

@@ -19,7 +19,7 @@ qué datos se quieren actualizar.
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Actualizar datos</title>
+    <title>Eliminar datos</title>
     <style>
         form {
             display: flex;
@@ -53,34 +53,28 @@ qué datos se quieren actualizar.
 </head>
 <body>
     <p><b>
-        Actualizar tabla escuderia
+        Eliminar de la tabla escuderia
     </b></p>
     <br><br><br>
-    <form method="POST" action="actualizarEscuderia.php">
+    <form method="POST" action="eliminarEscuderia.php">
         <div class="seleccion">
             <div class="seccion">
-                DATO ANTIGUO
+                DATO A ELIMINAR
                 <div class="elemento-seccion">
-                    <input type="text" name="antiguo" id="antiguo">
+                    <input type="text" name="escuderia" id="escuderia">
                 </div>
             </div>
             <div class="seccion">
-                DE LA CATEGORIA
+                CONFIRMA EL DATO
                 <div class="elemento-seccion">
-                    <input type="text" name="categoria" id="categoria">
-                </div>
-            </div>
-            <div class="seccion">
-                DATO NUEVO
-                <div class="elemento-seccion">
-                    <input type="text" name="nuevo" id="nuevo">
+                    <input type="text" name="confirmacion" id="confirmacion">
                 </div>
             </div>
         </div>
-        <input type="submit" value="Actualizar">
+        <input type="submit" value="Eliminar">
     </form>
     <br><br><br>
-    <a href="actualizar.php"><button>ACTUALIZAR OTRA<br>TABLA</button></a>
+    <a href="actualizar.php"><button>ELIMINAR DE OTRA<br>TABLA</button></a>
 </body>
 </html>
 
@@ -145,28 +139,24 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
             /**
              * _____________________________
              * |                           |
-             * | ACTUALIZACION DE REGISTRO |
-             * |    EN TABLA ESCUDERIA     |
+             * |  ELIMINACION DE REGISTRO  |
+             * |    EN TABLA CATEGORIA     |
              * |___________________________|
              * 
              * == ACCION ==
              * El usuario ha seleccionado la
-             * opcion "Escuderia".
+             * opcion "Categoria".
              * 
              * == CONEXION A BBDD ==
              * Conectar con credenciales
              * automaticas a la bbdd.
              * 
-             * == ACTUALIZACION DE DATOS ==
-             * Actualizar la escuderia
+             * == ELIMINACION DE DATOS ==
+             * Eliminar la categoria
              * especificada por el usuario.
              * 
-             * No van a estar permitidas las
-             * escuderias repetidas en una
-             * misma categoria.
-             * 
              * == INFORME DE ERRORES ==
-             * Si da algun error al actualizar
+             * Si da algun error al eliminar
              * los datos, informara al
              * usuario con el problema.
              * 

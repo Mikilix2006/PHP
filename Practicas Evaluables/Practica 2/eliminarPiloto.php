@@ -12,14 +12,14 @@ de datos de la tabla piloto elegida
 por el usuario en un formulario.
 
 Además, se deberá especificar
-qué datos se quieren actualizar.
+qué datos se quieren eliminar.
 
 -->
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Actualizar datos</title>
+    <title>Eliminar datos</title>
     <style>
         form {
             display: flex;
@@ -53,15 +53,21 @@ qué datos se quieren actualizar.
 </head>
 <body>
     <p><b>
-        Actualizar tabla piloto
+        Eliminar de la tabla piloto
     </b></p>
     <br><br><br>
-    <form method="POST" action="actualizarPiloto.php">
+    <form method="POST" action="eliminarPiloto.php">
         <div class="seleccion">
             <div class="seccion">
-                DATO ANTIGUO
+                DATO A ELIMINAR
                 <div class="elemento-seccion">
-                    <input type="text" name="antiguo" id="antiguo">
+                    <input type="text" name="piloto" id="piloto">
+                </div>
+            </div>
+            <div class="seccion">
+                CONFIRMA EL DATO
+                <div class="elemento-seccion">
+                    <input type="text" name="confirmacion" id="confirmacion">
                 </div>
             </div>
             <div class="seccion">
@@ -76,17 +82,11 @@ qué datos se quieren actualizar.
                     <input type="text" name="categoria" id="categoria">
                 </div>
             </div>
-            <div class="seccion">
-                DATO NUEVO
-                <div class="elemento-seccion">
-                    <input type="text" name="nuevo" id="nuevo">
-                </div>
-            </div>
         </div>
-        <input type="submit" value="Actualizar">
+        <input type="submit" value="Eliminar">
     </form>
     <br><br><br>
-    <a href="actualizar.php"><button>ACTUALIZAR OTRA<br>TABLA</button></a>
+    <a href="actualizar.php"><button>ELIMINAR DE OTRA<br>TABLA</button></a>
 </body>
 </html>
 
@@ -96,8 +96,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     $categoria_filled = false;
     $escuderia_filled = false;
-    $antiguo_filled = false;
-    $nuevo_filled = false;
+    $piloto_filled = false;
+    $confirmacion_filled = false;
 
     try { // try catch para la conexion con la base de datos
         /**
@@ -159,32 +159,24 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
             /**
              * _____________________________
              * |                           |
-             * | ACTUALIZACION DE REGISTRO |
-             * |    EN TABLA ESCUDERIA     |
+             * |  ELIMINACION DE REGISTRO  |
+             * |    EN TABLA CATEGORIA     |
              * |___________________________|
              * 
              * == ACCION ==
              * El usuario ha seleccionado la
-             * opcion "Piloto".
+             * opcion "Categoria".
              * 
              * == CONEXION A BBDD ==
              * Conectar con credenciales
              * automaticas a la bbdd.
              * 
-             * == ACTUALIZACION DE DATOS ==
-             * Actualizar el piloto
+             * == ELIMINACION DE DATOS ==
+             * Eliminar la categoria
              * especificada por el usuario.
              * 
-             * No van a estar permitidas las
-             * escuderias repetidas en una
-             * misma categoria, tampoco
-             * van a estar permitidos
-             * los pilotos repetidos
-             * dentro de una misma 
-             * escuderia.
-             * 
              * == INFORME DE ERRORES ==
-             * Si da algun error al actualizar
+             * Si da algun error al eliminar
              * los datos, informara al
              * usuario con el problema.
              * 
