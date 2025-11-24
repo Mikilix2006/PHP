@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     try {
@@ -21,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
             if ($user == $row['user'] && 
                 password_verify($_POST['password'],$row['password'])) {
                 $usuario_correcto = true;
+                $_SESSION['nombre'] = $_POST['user'];
                 if ($row['rol'] == 0) {
                     header("location:PanelBusquedas.php");
                 } elseif ($row['rol'] == 1) {

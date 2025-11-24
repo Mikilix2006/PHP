@@ -150,11 +150,13 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         } elseif (!$piloto_filled) {
             echo "<br><br>El piloto no es válido. ";
         } elseif (!$confirmacion_filled) {
-            echo "<br><br>La nueva escuderia introducida no es válida. ";
+            echo "<br><br>La confirmacion introducida no es válida. ";
         } elseif (!$escuderia_filled) {
             echo "<br><br>La escuderia a la que pertenece introducida no es válida. ";
         } elseif (!$categoria_filled) {
             echo "<br><br>La categoria a la que pertenece introducida no es válida. ";
+        } elseif ($piloto != $confirmacion) {
+            echo "<br><br>El piloto y la confirmacion deben ser iguales.";
         } else {
             /**
              * _____________________________
@@ -196,13 +198,14 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         
                 $result = $bd->query($sql);
 
-                // Comnprobacion de existencias
+                // Comprobacion de existencias
                 $existe_categoria = false;
                 $existe_escuderia = false;
                 $existe_piloto = false;
                 foreach ($result as $row) {
                     if ($row['nombre_categoria']==$categoria) {
                         $existe_categoria = true;
+                        $fkIdCategoria = $row['fk_id_categoria'];
                         if ($row['nombre_escuderia']==$escuderia) {
                             $existe_escuderia = true;
                             $fkIdEscuderia = $row['fk_id_escuderia'];
@@ -219,12 +222,10 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                     if (!$existe_escuderia) {
                     echo "<br><br>La escuderia a la que pertenecen no existe en la base de datos.";
                     } else {
-                        if ($existe_nuevo_piloto) {
-                            echo "<br><br>El nuevo piloto ya existe en la BBDD.";
-                        } elseif (!$existe_antiguo_piloto) {
-                            echo "<br><br>El antiguo piloto no existe en la BBDD.";
+                        if (!$existe_piloto) {
+                            echo "<br><br>El piloto especificado no existe en la BBDD.";
                         } else {
-                            // Actualizar piloto
+                            // Eliminar piloto
                             $preparada = $bd->prepare("DELETE FROM piloto
                                                         WHERE fk_id_escuderia IN (
                                                             SELECT id_escuderia
@@ -232,17 +233,11 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                                                             WHERE fk_id_categoria = (
                                                                 SELECT id_categoria
                                                                 FROM categoria
-                                                                WHERE nombre_categoria = '?'));");
-                            $preparada->execute(array($nuevo, $antiguo, $fkIdEscuderia));
-                            echo "<br>Piloto actualizada con éxito<br><br>";
-                            echo "VALORES ACTUALIZADOS:<br>";
-                            echo "Piloto antiguo: $antiguo<br>";
-                            echo "Piloto nuevo: $nuevo<br>";
-                            echo "Perteneciente a la escuderia: $escuderia<br>";
-                            echo "Perteneciente a la categoría: $categoria";
+                                                                WHERE nombre_categoria = ?));");
+                            $preparada->execute(array($categoria));
+                            echo "<br>Piloto eliminado con éxito<br><br>";
                         }
                     }
-                    
                 }
             }  catch (PDOException $e) {
                     echo 'Error actualizando la escuderia => ' . $e->getMessage();

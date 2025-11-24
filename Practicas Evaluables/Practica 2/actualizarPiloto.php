@@ -203,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         ORDER BY id_piloto;';
                 $result = $bd->query($sql);
 
-                // Comnprobacion de existencias
+                // Comprobacion de existencias
                 $existe_categoria = false;
                 $existe_escuderia = false;
                 $existe_antiguo_piloto = false;

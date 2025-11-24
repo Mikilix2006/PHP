@@ -139,14 +139,16 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
             echo "<br><br>La confirmacion de la escuderia introducida no es válida. ";
         } elseif (!$escuderia_filled) {
             echo "<br><br>La escuderia introducida no es válida. ";
-        } elseif (!$categoria_filled) {
-            echo "<br><br>La categoria a la que pertenece introducida no es válida. ";
+        } elseif (!$escuderia_filled) {
+            echo "<br><br>La escuderia introducida no es válida. ";
+        } elseif ($escuderia != $confirmacion) {
+            echo "<br><br>La escuderia y la confirmacion no son iguales.";
         } else {
             /**
              * _____________________________
              * |                           |
              * |  ELIMINACION DE REGISTRO  |
-             * |    EN TABLA CATEGORIA     |
+             * |    EN TABLA ESCUDERIA     |
              * |___________________________|
              * 
              * == ACCION ==
@@ -187,18 +189,17 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                     if ($row['nombre_categoria']==$categoria) {
                         $id_categoria = $row['id_categoria'];
                         $existe_categoria = true;
-                        if ($row['escuderia']==$escuderia) {
-                        $existe_escuderia = true;
+                        if ($row['nombre_escuderia']==$escuderia) {
+                            $existe_escuderia = true;
                         }
                     }
                 }
-
                 // Eliminacion de datos
                 if (!$existe_categoria) {
                     echo "<br><br>La categoria a eliminar no existe en la base de datos.";
                 } else {
                     if ($existe_escuderia) {
-                        // Eliminar escuderia: primero lo pilotos
+                        // Eliminar escuderia: primero los pilotos
                         $preparada = $bd->prepare("DELETE FROM piloto
                                                     WHERE fk_id_escuderia = (
                                                         SELECT id_escuderia
@@ -208,8 +209,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         // Eliminar escuderia: por ultimo la escuderia
                         $preparada = $bd->prepare("DELETE FROM escuderia
                                                     WHERE fk_id_categoria = ?;");
-                        $preparada->execute(array($categoria));
-
+                        $preparada->execute(array($id_categoria));
                         echo "<br>Escudería eliminada con éxito<br><br>";
                     } else {
                         echo "<br>La escuderia especificada no existe en la BBDD<br><br>";

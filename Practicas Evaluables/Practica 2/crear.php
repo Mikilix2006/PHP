@@ -344,6 +344,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                             $preparada->execute(array($categoria));
                             foreach ($preparada as $row) {
                                 if ($row['count(*)'] > 0) {
+                                    $ya_insetrada = false;
                                     // comprobar que la escuderia no se repita
                                     $preparada = $bd->prepare("SELECT * 
                                                                 FROM escuderia e 
@@ -361,6 +362,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                                     // insertar categoria directamente
                                     $preparada = $bd->prepare("INSERT INTO escuderia(nombre_escuderia,fk_id_categoria) VALUES(?,?)");
                                     $preparada->execute(array($escuderia,$id_categoria));
+                                    $ya_insetrada = true;
                                     echo "Caterogía insertada con éxito<br><br>";
                                     echo "VALORES INSERTADOS:<br>";
                                     echo "Categoria (fk_id_categoria): $categoria<br>";
@@ -370,7 +372,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         }
 
                         if (!$existe_escuderia) {
-                            if ($existe_categoria) {
+                            if ($existe_categoria && !$ya_insetrada) {
                                 $preparada = $bd->prepare("INSERT INTO escuderia(nombre_escuderia,fk_id_categoria) VALUES(?,?)");
                                 $preparada->execute(array($escuderia,$id_categoria));
                                 echo "Caterogía insertada con éxito<br><br>";
@@ -378,7 +380,9 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                                 echo "Categoria (fk_id_categoria): $categoria<br>";
                                 echo "Escuderia: $escuderia<br>";
                             } else {
-                                echo "No existe esa categoría en la base de datos.";
+                                if (!$ya_insetrada) {
+                                    echo "No existe esa categoría en la base de datos.";
+                                }
                             }
                         } else {
                             echo "Esa escuderia ya existe en la categoria especificada.";

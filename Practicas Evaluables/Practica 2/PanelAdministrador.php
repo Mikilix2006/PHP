@@ -1,3 +1,19 @@
+<?php
+
+session_start();
+
+if (!isset($_COOKIE['visitas_admin'])){
+		setcookie('visitas_admin', '1', time() + 3600 * 24);
+		echo "Hola " . $_SERVER['nombre'] . "! Bienvenido por primera vez";
+	}else{
+		$visitas_admin = (int) $_COOKIE['visitas_admin'];
+		
+		$visitas_admin++;
+		setcookie('visitas_admin', $visitas_admin, time() + 3600 * 24);
+		echo "Hola " . $_SERVER['nombre'] . "! Bienvenido por $visitas_admin º vez";
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
