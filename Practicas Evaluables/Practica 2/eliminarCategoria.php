@@ -61,20 +61,20 @@ qué datos se quieren eliminar.
             <div class="seccion">
                 DATO A ELIMINAR
                 <div class="elemento-seccion">
-                    <input type="text" name="categoria" id="categoria">
+                    <input type="text" name="categoria" id="categoria" value="<?php if(isset($_POST['categoria'])) { echo $_POST['categoria']; } ?>">
                 </div>
             </div>
             <div class="seccion">
                 CONFIRMA EL DATO
                 <div class="elemento-seccion">
-                    <input type="text" name="confirmacion" id="confirmacion">
+                    <input type="text" name="confirmacion" id="confirmacion" value="<?php if(isset($_POST['categoria'])) { echo $_POST['confirmacion']; } ?>">
                 </div>
             </div>
         </div>
         <input type="submit" value="Eliminar">
     </form>
     <br><br><br>
-    <a href="actualizar.php"><button>ELIMINAR DE OTRA<br>TABLA</button></a>
+    <a href="eliminar.php"><button>ELIMINAR DE OTRA<br>TABLA</button></a>
 </body>
 </html>
 
@@ -169,33 +169,43 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         ORDER BY id_categoria;';
                 $result = $bd->query($sql);
 
-                // Comnprobacion de existencias
+                // Comprobacion de existencias
                 $existe_categoria = false;
                 foreach ($result as $row) {
                     if ($row['nombre_categoria']==$categoria) {
                         $existe_categoria = true;
                     }
                 }
-                // Actualizacion de datos
+                // Eliminacion de datos
                 if (!$existe_categoria) {
-                    echo "<br><br>La categoria a actualizar no existe en la base de datos.";
+                    echo "<br><br>La categoria a eliminar no existe en la base de datos.";
                 } else {
-                    if ($existe_nueva_categoria) {
-                        echo "<br><br>La nueva categoria ya existe en la BBDD.";
-                    } else {
-                        // Actualizar categoria
-                        $preparada = $bd->prepare("UPDATE categoria 
-                                                    SET nombre_categoria = ?
-                                                    WHERE nombre_categoria = ?;");
-                        $preparada->execute(array($confirmacion, $categoria));
-                        echo "<br>Caterogía actualizada con éxito<br><br>";
-                        echo "VALORES ACTUALIZADOS:<br>";
-                        echo "Categoria antigua: $categoria<br>";
-                        echo "Categoria nueva: $confirmacion";
-                    }
+                    // Eliminar categoria: primero los pilotos
+                    $preparada = $bd->prepare("DELETE FROM piloto
+                                                WHERE fk_id_escuderia IN (
+                                                    SELECT id_escuderia
+                                                    FROM escuderia
+                                                    WHERE fk_id_categoria = (
+                                                        SELECT id_categoria
+                                                        FROM categoria
+                                                        WHERE nombre_categoria = ?));");
+                    $preparada->execute(array($categoria));
+                    // Eliminar categoria: segundo las escuderias
+                    $preparada = $bd->prepare("DELETE FROM escuderia
+                                                WHERE fk_id_categoria = (
+                                                    SELECT id_categoria
+                                                    FROM categoria
+                                                    WHERE nombre_categoria = ?);");
+                    $preparada->execute(array($categoria));
+                    // Eliminar categoria: con todo eliminado, eliminar categoria
+                    $preparada = $bd->prepare("DELETE FROM categoria
+                                                WHERE nombre_categoria = ?;");
+                    $preparada->execute(array($categoria));
+
+                    echo "<br>Caterogía eliminada con éxito<br><br>";
                 }
             }  catch (PDOException $e) {
-                    echo 'Error actualizando la categoría => ' . $e->getMessage();
+                    echo 'Error eliminando la categoría => ' . $e->getMessage();
             }
         }
     } catch (PDOException $e) {

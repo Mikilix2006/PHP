@@ -86,7 +86,7 @@ qué datos se quieren eliminar.
         <input type="submit" value="Eliminar">
     </form>
     <br><br><br>
-    <a href="actualizar.php"><button>ELIMINAR DE OTRA<br>TABLA</button></a>
+    <a href="eliminar.php"><button>ELIMINAR DE OTRA<br>TABLA</button></a>
 </body>
 </html>
 
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         /**
          * __________________
          * |                | █████ ████ ████  █     ████     ████
-         * |   ACTUALIZAR   |   █   █  █ █  █  █     █  █     █  █
+         * |   ELIMINAR DE  |   █   █  █ █  █  █     █  █     █  █
          * |     TABLA      |   █   ████ █████ █     ████     ████
          * |     PILOTO     |   █   █  █ █   █ █     █  █     █   
          * |________________|   █   █  █ █████ █████ █  █     █   
@@ -111,8 +111,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
          */
         $categoria = $_POST['categoria']; // Recoger informacion del formulario
         $escuderia = $_POST['escuderia']; // Recoger informacion del formulario
-        $antiguo = $_POST['antiguo']; // Recoger informacion del formulario
-        $nuevo = $_POST['nuevo']; // Recoger informacion del formulario
+        $piloto = $_POST['piloto']; // Recoger informacion del formulario
+        $confirmacion = $_POST['confirmacion']; // Recoger informacion del formulario
         /**
          * _______________________
          * |                     |
@@ -128,28 +128,28 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
          * de informe de errores.
          * 
          */
-        if (trim($antiguo)!=="")
-            $antiguo_filled = true;
+        if (trim($confirmacion)!=="")
+            $confirmacion_filled = true;
         if (trim($categoria)!=="")
             $categoria_filled = true;
         if (trim($escuderia)!=="")
             $escuderia_filled = true;
-        if (trim($nuevo)!=="")
-            $nuevo_filled = true;
+        if (trim($piloto)!=="")
+            $piloto_filled = true;
         /**
          * __________________________
          * |                        |
          * | TRATAMIENTO DE ERRORES |
-         * |  DE ACTUALIZACION DE   |
+         * |   DE ELIMINACION DE    |
          * |        PILOTO          |
          * |________________________|
          * 
          */
-        if (!$antiguo_filled && !$nuevo_filled && !$categoria_filled && !$escuderia_filled) {
+        if (!$piloto_filled && !$confirmacion_filled && !$categoria_filled && !$escuderia_filled) {
             echo "<br><br>Introduzca datos válidos.";
-        } elseif (!$antiguo_filled) {
-            echo "<br><br>La antigua escuderia introducida no es válida. ";
-        } elseif (!$nuevo_filled) {
+        } elseif (!$piloto_filled) {
+            echo "<br><br>El piloto no es válido. ";
+        } elseif (!$confirmacion_filled) {
             echo "<br><br>La nueva escuderia introducida no es válida. ";
         } elseif (!$escuderia_filled) {
             echo "<br><br>La escuderia a la que pertenece introducida no es válida. ";
@@ -160,20 +160,20 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
              * _____________________________
              * |                           |
              * |  ELIMINACION DE REGISTRO  |
-             * |    EN TABLA CATEGORIA     |
+             * |     EN TABLA PILOTO       |
              * |___________________________|
              * 
              * == ACCION ==
              * El usuario ha seleccionado la
-             * opcion "Categoria".
+             * opcion "Piloto".
              * 
              * == CONEXION A BBDD ==
              * Conectar con credenciales
              * automaticas a la bbdd.
              * 
              * == ELIMINACION DE DATOS ==
-             * Eliminar la categoria
-             * especificada por el usuario.
+             * Eliminar le piloto
+             * especificado por el usuario.
              * 
              * == INFORME DE ERRORES ==
              * Si da algun error al eliminar
@@ -193,24 +193,21 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                         LEFT JOIN escuderia e ON e.id_escuderia = p.fk_id_escuderia 
                         LEFT JOIN categoria c ON c.id_categoria = e.fk_id_categoria
                         ORDER BY id_piloto;';
+                        
                 $result = $bd->query($sql);
 
                 // Comnprobacion de existencias
                 $existe_categoria = false;
                 $existe_escuderia = false;
-                $existe_antiguo_piloto = false;
-                $existe_nuevo_piloto = false;
+                $existe_piloto = false;
                 foreach ($result as $row) {
                     if ($row['nombre_categoria']==$categoria) {
                         $existe_categoria = true;
                         if ($row['nombre_escuderia']==$escuderia) {
                             $existe_escuderia = true;
                             $fkIdEscuderia = $row['fk_id_escuderia'];
-                            if ($row['nombre_piloto']==$nuevo) {
-                                $existe_nuevo_piloto = true;
-                            }
-                            if ($row['nombre_piloto']==$antiguo) {
-                                $existe_antiguo_piloto = true;
+                            if ($row['nombre_piloto']==$piloto) {
+                                $existe_piloto = true;
                             }
                         }
                     }
@@ -228,10 +225,14 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                             echo "<br><br>El antiguo piloto no existe en la BBDD.";
                         } else {
                             // Actualizar piloto
-                            $preparada = $bd->prepare("UPDATE piloto 
-                                                        SET nombre_piloto = ?
-                                                        WHERE nombre_piloto = ?
-                                                        AND fk_id_escuderia = ?;");
+                            $preparada = $bd->prepare("DELETE FROM piloto
+                                                        WHERE fk_id_escuderia IN (
+                                                            SELECT id_escuderia
+                                                            FROM escuderia
+                                                            WHERE fk_id_categoria = (
+                                                                SELECT id_categoria
+                                                                FROM categoria
+                                                                WHERE nombre_categoria = '?'));");
                             $preparada->execute(array($nuevo, $antiguo, $fkIdEscuderia));
                             echo "<br>Piloto actualizada con éxito<br><br>";
                             echo "VALORES ACTUALIZADOS:<br>";

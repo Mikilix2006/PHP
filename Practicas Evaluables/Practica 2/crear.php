@@ -326,29 +326,53 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                          * el usuario sera notificado
                          * 
                          */
-                        $sql = 'SELECT * FROM categoria;';
+                        $sql = 'SELECT * 
+                                FROM categoria;';
                         $result = $bd->query($sql);
-                        $existe_categoria = false;
                         foreach ($result as $row) {
                             if ($row['nombre_categoria'] == $categoria) {
-                                $categoria = $row['id_categoria'];
+                                $id_categoria = $row['id_categoria'];
                                 $existe_categoria = true;
                             }
                         }
+
                         if ($existe_categoria) {
-                            $sql = 'SELECT * FROM escuderia;';
-                            $result = $bd->query($sql);
-                            $existe_escuderia = false;
-                            foreach ($result as $row) {
-                                if ($row['nombre_categoria'] == $categoria) {
-                                    $existe_escuderia = true;
+                            $preparada = $bd->prepare("SELECT count(*) 
+                                                        FROM escuderia e 
+                                                        LEFT JOIN categoria c ON e.fk_id_categoria = c.id_categoria 
+                                                        WHERE nombre_categoria = ?;");
+                            $preparada->execute(array($categoria));
+                            foreach ($preparada as $row) {
+                                if ($row['count(*)'] > 0) {
+                                    // comprobar que la escuderia no se repita
+                                    $preparada = $bd->prepare("SELECT * 
+                                                                FROM escuderia e 
+                                                                LEFT JOIN categoria c ON e.fk_id_categoria = c.id_categoria
+                                                                WHERE nombre_categoria = ?
+                                                                ORDER BY id_escuderia;");
+                                    $preparada->execute(array($categoria));
+                                    $existe_escuderia = false;
+                                    foreach ($preparada as $row) {
+                                        if ($row['nombre_escuderia']==$escuderia) {
+                                            $existe_escuderia = true; // se repite
+                                        }
+                                    }
+                                } else {
+                                    // insertar categoria directamente
+                                    $preparada = $bd->prepare("INSERT INTO escuderia(nombre_escuderia,fk_id_categoria) VALUES(?,?)");
+                                    $preparada->execute(array($escuderia,$id_categoria));
+                                    echo "Caterogía insertada con éxito<br><br>";
+                                    echo "VALORES INSERTADOS:<br>";
+                                    echo "Categoria (fk_id_categoria): $categoria<br>";
+                                    echo "Escuderia: $escuderia<br>";
                                 }
                             }
                         }
-                        if ($existe_escuderia) {
+
+                        if (!$existe_escuderia) {
                             if ($existe_categoria) {
                                 $preparada = $bd->prepare("INSERT INTO escuderia(nombre_escuderia,fk_id_categoria) VALUES(?,?)");
-                                $preparada->execute(array($escuderia,$categoria));
+                                $preparada->execute(array($escuderia,$id_categoria));
                                 echo "Caterogía insertada con éxito<br><br>";
                                 echo "VALORES INSERTADOS:<br>";
                                 echo "Categoria (fk_id_categoria): $categoria<br>";

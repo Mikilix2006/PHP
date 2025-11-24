@@ -16,7 +16,7 @@ por el usuario en un formulario.
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Actualizar datos</title>
+    <title>Eliminar datos</title>
     <style>
         form {
             display: flex;
@@ -49,7 +49,7 @@ por el usuario en un formulario.
     </style>
 </head>
 <body>
-    <p>Este es el panel de ACTUALIZACIÓN de datos para administradores</p>
+    <p>Este es el panel de ELIMINACION de datos para administradores</p>
     
     <br><br><br>
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
@@ -97,36 +97,36 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
             /**
              * __________________
              * |                | █████ ████ ████  █     ████     ████
-             * |   ACTUALIZAR   |   █   █  █ █  █  █     █  █     █   
+             * |    ELIMINAR    |   █   █  █ █  █  █     █  █     █   
              * |     TABLA      |   █   ████ █████ █     ████     █   
              * |    CATEGORIA   |   █   █  █ █   █ █     █  █     █   
              * |________________|   █   █  █ █████ █████ █  █     ████
              * 
              */
             if ($tabla == 'tabla_categoria') {
-                require "actualizarCategoria.php";
+                require "eliminarCategoria.php";
             /**
              * __________________
              * |                | █████ ████ ████  █     ████     ████
-             * |   ACTUALIZAR   |   █   █  █ █  █  █     █  █     █   
+             * |    ELIMINAR    |   █   █  █ █  █  █     █  █     █   
              * |     TABLA      |   █   ████ █████ █     ████     ███ 
              * |    ESCUDERIA   |   █   █  █ █   █ █     █  █     █   
              * |________________|   █   █  █ █████ █████ █  █     ████
              * 
              */
             } elseif ($tabla == 'tabla_escuderia') {
-                require "actualizarEscuderia.php";
+                require "eliminarEscuderia.php";
             /**
              * __________________
              * |                | █████ ████ ████  █     ████     ████
-             * |   ACTUALIZAR   |   █   █  █ █  █  █     █  █     █  █
+             * |    ELIMINAR    |   █   █  █ █  █  █     █  █     █  █
              * |     TABLA      |   █   ████ █████ █     ████     ████   
              * |     PILOTO     |   █   █  █ █   █ █     █  █     █   
              * |________________|   █   █  █ █████ █████ █  █     █   
              * 
              */
             } elseif ($tabla == 'tabla_piloto') {
-                require "actualizarPiloto.php";
+                require "eliminarPiloto.php";
             }
         } catch (PDOException $e) {
             echo 'Error al conectar con la BD: ' . $e->getMessage();
