@@ -2,15 +2,15 @@
 
 session_start();
 
-if (!isset($_COOKIE['visitas_admin'])){
-		setcookie('visitas_admin', '1', time() + 3600 * 24);
-		echo "Hola " . $_SERVER['nombre'] . "! Bienvenido por primera vez";
+if (!isset($_COOKIE['visitas'])){
+		setcookie('visitas', '1', time() + 3600 * 2);
+		echo "Hola " . $_SESSION['nombre'] . "! Bienvenido por primera vez";
 	}else{
-		$visitas_admin = (int) $_COOKIE['visitas_admin'];
+		$visitas = (int) $_COOKIE['visitas'];
 		
-		$visitas_admin++;
-		setcookie('visitas_admin', $visitas_admin, time() + 3600 * 24);
-		echo "Hola " . $_SERVER['nombre'] . "! Bienvenido por $visitas_admin º vez";
+		$visitas++;
+		setcookie('visitas', $visitas, time() + 3600 * 2);
+		echo "Hola " . $_SESSION['nombre'] . "! Bienvenido por $visitas º vez";
 }
 ?>
 
