@@ -402,7 +402,6 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
              * 
              */
             } elseif ($tabla == 'tabla_piloto') {
-                echo "Crear piloto";
                 $categoria = $_POST['categoria']; // recoger informacion del formulario
                 $escuderia = $_POST['escuderia']; // recoger informacion del formulario
                 $piloto = $_POST['piloto']; // recoger informacion del formulario
