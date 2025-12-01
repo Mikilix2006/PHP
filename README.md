@@ -1,11 +1,11 @@
 
 <!--table border="5" align="center">
     <tr>
-        <th>CONSTRUIR</th>
+        <th>TEMPORADA</th>
         <th>README</th>
     </tr>
     <tr>
-        <td rowspan=11>📂 · 2ºDAW</td>
+        <td rowspan=11>📂 · 2025-2026 2ºDAW</td>
         <td>📎 · <a href="https://github.com/Mikilix2006/SQL-DEVELOPER/tree/main/ConsultasYVistas">CONSULTAS</a></td>
     </tr>
     <tr>
