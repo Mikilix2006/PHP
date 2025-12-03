@@ -5,29 +5,20 @@
         <th>CARPETAS</th>
     </tr>
     <tr>
-        <td rowspan=8>📂 · BBDD</td>
-        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/BBDD/Actualizacion">ACTUALIZACION (CRUD)</a></td>
+        <td rowspan=5>📂 · BBDD</td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/BBDD/CRUD">CRUD</a></td>
     </tr>
     <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Basics/Bucles">CONEXION</a></td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/BBDD/Conexion">CONEXION</a></td>
     </tr>
     <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Basics/Clases%20y%20objetos">CLASES Y OBJETOS</a></td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/BBDD/Control%20de%20Errores">ERRORES</a></td>
     </tr>
     <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Basics/Condicionales">CONDICIONALES</a></td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/BBDD/Encriptacion">ENCRIPTACION</a></td>
     </tr>
     <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Basics/Errores%20y%20Excepciones">ERRORES Y EXCEPCIONES</a></td>
-    </tr>
-    <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Basics/Funciones">FUNCIONES Y PROCEDIMIENTOS</a></td>
-    </tr>
-    <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Basics/Implode%20y%20Explode">IMPLODE Y EXPLODE</a></td>
-    </tr>
-    <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-DEVELOPER/tree/main/Registros">VARIABLES GLOBALES</a></td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/BBDD/Sentencias%20Preparadas">SENTENCIAS PREPARADAS</a></td>
     </tr>
     <tr>
         <td rowspan=8>📂 · BASICS</td>
