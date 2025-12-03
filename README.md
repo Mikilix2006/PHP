@@ -45,4 +45,26 @@
     <tr>
         <td>📎 · <a href="https://github.com/Mikilix2006/SQL-DEVELOPER/tree/main/Registros">VARIABLES GLOBALES</a></td>
     </tr>
+    <tr>
+        <td rowspan=7>📂 · FORMULARIOS</td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Formularios/Cookies">COOKIES</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Formularios/Login">LOGIN</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Formularios/PHP%20con%20HTML">PHP + HTML</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Formularios/Redirecciones">REDIRECCIONES</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Formularios/Signup">SIGNUP</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Formularios/Storage">STORAGE</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Formularios/Validaciones">VALIDACIONES</a></td>
+    </tr>
 </table>
