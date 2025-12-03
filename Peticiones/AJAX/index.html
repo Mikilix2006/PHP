@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<head>
+    <title>Hora en el servidor</title>		
+		<meta charset = "UTF-8">
+		<script src="hora.js"></script>
+		<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Hora en el servidor</h1>
+    <section class="seccion-padre">
+        <section id="hora"></section>
+        <section class="contenedor">
+            <div id="state0">No se ha llamado a open()</div>
+            <div id="state1">Se ha llamado a open(), pero no a send()</div>
+            <div id="state2">Se han recibido las cabeceras de la respuesta</div>
+            <div id="state3">Se está recibiendo el cuerpo de la respuesta</div>
+            <div id="state4">Se ha recibido la respuesta</div>
+        </section>
+    </section>
+</body>
+</html>
