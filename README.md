@@ -78,7 +78,7 @@
         <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Miscellaneous/Subida%20de%20Archivos">SUBIDA DE ARCHIVOS</a></td>
     </tr>
     <tr>
-        <td rowspan=3>📂 · PETICIONES</td>
+        <td rowspan=1>📂 · PETICIONES</td>
         <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Peticiones/AJAX">AJAX</a></td>
     </tr>
 </table>
