@@ -67,4 +67,18 @@
     <tr>
         <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Formularios/Validaciones">VALIDACIONES</a></td>
     </tr>
+    <tr>
+        <td rowspan=3>📂 · MISCELLANEOUS</td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Miscellaneous/Ejercicios%20clase">EJERCICIOS CLASE</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Miscellaneous/Practicas%20Evaluables">PRÁCTICAS EVALUABLES</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Miscellaneous/Subida%20de%20Archivos">SUBIDA DE ARCHIVOS</a></td>
+    </tr>
+    <tr>
+        <td rowspan=3>📂 · PETICIONES</td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Peticiones/AJAX">AJAX</a></td>
+    </tr>
 </table>
