@@ -1,0 +1,2 @@
+# WORKS WITH JSON
+## USES GET

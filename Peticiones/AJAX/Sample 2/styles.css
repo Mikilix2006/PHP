@@ -1,0 +1,16 @@
+* {
+    margin: 0px;
+    background-color: bisque;
+}
+
+body, #principal {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: auto;
+    margin-top: 20px;
+}
+
+body {
+    margin-top: 80px;
+}
