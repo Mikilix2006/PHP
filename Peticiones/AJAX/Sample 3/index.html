@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>AJAX</title>
+		<meta charset = "UTF-8">
+		<script type = "text/javascript" src = "functions.js"></script>		
+        <link rel="stylesheet" href="estilosFormularioMotociclismo.css">
+	</head>	
+	<body>	
+        <h1>BUSCADOR DE PILOTOS</h1>
+        <div class="formularios">
+            <div>
+                <h3>Por sus claves</h3>
+                <form method="POST" action="http://localhost/Practica_RA2_RA3_UD2_DWES.php">
+                    <input type ="text" name="categoria" placeholder="Categoría"/>      
+                    <input type ="text" name="escuderia" placeholder="Escudería"/>
+                    <input type ="number" name="piloto" placeholder="Piloto (1: titular ó 2: secundario)" title="0: Ambos pilotos, 1: Principal, 2: Secundario"/>
+                    <input type="submit" value="Buscar"/>
+                </form>
+            </div>
+            <div>
+                <h3>Por su contenido</h3>
+                <form method="POST" action="http://localhost/Practica_RA2_RA3_UD2_DWES.php">
+                    <input type ="text" name="contenido" placeholder="Contenido"/>      
+                    <input type="submit" value="Buscar"/>
+                </form>
+            </div>
+        </div>
+		<h1>Resultado de búsqueda</h1>
+		<section id = "principal"></section>
+		<script type = "text/javascript">categorias();</script>		
+	</body>
+</html>
