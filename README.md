@@ -43,7 +43,7 @@
         <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Basics/Implode%20y%20Explode">IMPLODE Y EXPLODE</a></td>
     </tr>
     <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-DEVELOPER/tree/main/Registros">VARIABLES GLOBALES</a></td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/PHP/tree/main/Basics/Variables%20globales">VARIABLES GLOBALES</a></td>
     </tr>
     <tr>
         <td rowspan=7>📂 · FORMULARIOS</td>
