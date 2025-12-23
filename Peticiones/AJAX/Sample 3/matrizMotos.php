@@ -47,6 +47,6 @@ $motociclismo = array(
 );
 
 $json = json_encode($motociclismo);
-
 echo $json;
+
 ?>
