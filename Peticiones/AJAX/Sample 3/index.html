@@ -11,22 +11,21 @@
         <div class="formularios">
             <div>
                 <h3>Por sus claves</h3>
-                <form method="POST" action="http://localhost/functions.js">
+                <form>
                     <input type ="text" id="categoria" name="categoria" placeholder="Categoría"/>      
                     <input type ="text" id="escuderia" name="escuderia" placeholder="Escudería"/>
-                    <input type ="number" id="piloto" name="piloto" placeholder="Piloto (1: titular ó 2: secundario)" title="0: Ambos pilotos, 1: Principal, 2: Secundario"/>
-                    <input type="submit" value="Buscar"/>
+                    <input type ="number" id="piloto" name="piloto" placeholder="Piloto (1: titular ó 2: secundario)" title="1: Principal, 2: Secundario"/>
+                    <input type="submit" value="Buscar" onclick="return categorias()"/>
                 </form>
             </div>
             <div>
                 <h3>Por su contenido</h3>
-                <form method="POST" action="http://localhost/functions.js">
+                <form>
                     <input type ="text" id="contenido" name="contenido" placeholder="Contenido"/>      
-                    <input type="submit" value="Buscar"/>
+                    <input type="submit" value="Buscar" onclick="return categorias()"/>
                 </form>
             </div>
         </div>
-		<section id = "principal"></section>
-		<script type = "text/javascript">categorias();</script>		
+		<section id="principal"></section>	
 	</body>
 </html>
