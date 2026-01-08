@@ -499,6 +499,7 @@ function busquedaPil(matriz, piloto_value) {
 	resultado_de_busqueda.innerHTML = "";
 
     for (var cat in matriz) {
+		// 2. Introducir las categorías
 		var lista_categorias = document.createElement("ul");
 		var linea_categorias = document.createElement("li");
 
