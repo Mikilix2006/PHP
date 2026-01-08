@@ -557,6 +557,11 @@ function busquedaPil(matriz, piloto_value) {
     }
 }
 
+/*
+
+FUNCIONA A LA PERFECCIÓN
+
+*/
 function busquedaContenido(matriz, contenido_value) {
 	// DEBUG
 	console.log("Contenido");
